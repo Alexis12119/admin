@@ -8,7 +8,7 @@ from db import create_connection
 image_url = "https://www.example.com/placeholder.png"
 
 window = tk.Tk()
-window.title("Dashboard")
+window.title("E-Learning")
 window.geometry("800x400")
 
 bg_color = "#0a9ea8"
