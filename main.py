@@ -433,7 +433,7 @@ def show_login_page():
     right_frame = tk.Frame(main_frame, bg=bg_color, padx=20, pady=20)
     right_frame.pack(side="left", expand=True, fill="both")
 
-    title_label = tk.Label(right_frame, text="Login", font=("Arial", 20), bg=bg_color, fg=text_color)
+    title_label = tk.Label(right_frame, text="Login", font=("Arial", 30, "bold"), bg=bg_color, fg=button_bg_color)
     title_label.pack(pady=20)
 
     username_label = tk.Label(right_frame, text="Username:", bg=bg_color, fg=text_color)
