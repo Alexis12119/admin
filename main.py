@@ -26,7 +26,7 @@ toggle_button = None
 window.grid_columnconfigure(2, weight=1)
 window.grid_rowconfigure(0, weight=1)
 
-def show_main_interface(real_username):
+def show_main_interface(real_name):
     global sidebar_frame, content_frame
     
     for widget in window.winfo_children():
@@ -58,25 +58,25 @@ def show_main_interface(real_username):
     line.pack(fill=tk.X, padx=10)
 
 
-    home_button = ttk.Button(sidebar_frame, text="    Home", command=lambda: show_home_page(real_username), style=sidebar_button_style)
+    home_button = ttk.Button(sidebar_frame, text="    Home", command=lambda: show_home_page(real_name), style=sidebar_button_style)
     home_button.pack(pady=(5, 10))
 
-    teacher_button = ttk.Button(sidebar_frame, text="󱪌  Teacher", command=lambda: show_teacher_form(real_username), style=sidebar_button_style)
+    teacher_button = ttk.Button(sidebar_frame, text="󱪌  Teacher", command=lambda: show_teacher_form(real_name), style=sidebar_button_style)
     teacher_button.pack(pady=10)
 
-    student_button = ttk.Button(sidebar_frame, text="  Student", command=lambda: show_student_form(real_username), style=sidebar_button_style)
+    student_button = ttk.Button(sidebar_frame, text="  Student", command=lambda: show_student_form(real_name), style=sidebar_button_style)
     student_button.pack(pady=10)
 
     line = tk.Frame(sidebar_frame, height=1, bg="white")
     line.pack(fill=tk.X, padx=10)
 
-    admin_button = ttk.Button(sidebar_frame, text="󰘰   Admin", command=lambda: show_admin_form(real_username), style=sidebar_button_style)
+    admin_button = ttk.Button(sidebar_frame, text="󰘰   Admin", command=lambda: show_admin_form(real_name), style=sidebar_button_style)
     admin_button.pack(pady=10)
 
-    setting_button = ttk.Button(sidebar_frame, text="   Settings", command=lambda: show_settings_page(real_username), style=sidebar_button_style)
+    setting_button = ttk.Button(sidebar_frame, text="   Settings", command=lambda: show_settings_page(real_name), style=sidebar_button_style)
     setting_button.pack(pady=10)
 
-    show_home_page(real_username)
+    show_home_page(real_name)
 
 def show_blank_page(role):
     for widget in window.winfo_children():
@@ -107,7 +107,7 @@ def get_image():
 
 placeholder_image = get_image()
 
-def show_home_page(real_username):
+def show_home_page(real_name):
     for widget in content_frame.winfo_children():
         widget.destroy()
 
@@ -117,7 +117,7 @@ def show_home_page(real_username):
     title_label = tk.Label(header_frame, text="Home", font=("Arial", 16), fg=text_color, bg=bg_color)
     title_label.pack(side="left", padx=(10, 0))
 
-    username_label = tk.Label(header_frame, text=f"User: {real_username}", font=("Arial", 12), fg=text_color, bg=bg_color)
+    username_label = tk.Label(header_frame, text=f"User: {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
     username_label.pack(side="right", padx=(0, 10))
 
     separator = tk.Frame(content_frame, height=2, bg="white")
@@ -145,7 +145,7 @@ def show_home_page(real_username):
     student_button.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
 
 
-def show_admin_form(real_username):
+def show_admin_form(real_name):
     for widget in content_frame.winfo_children():
         widget.destroy()
 
@@ -156,7 +156,7 @@ def show_admin_form(real_username):
     title_label = tk.Label(header_frame, text="Admin Dashboard", font=("Arial", 16), fg=text_color, bg=bg_color)
     title_label.pack(side="left", padx=(10, 0))
 
-    username_label = tk.Label(header_frame, text=f"User: {real_username}", font=("Arial", 12), fg=text_color, bg=bg_color)
+    username_label = tk.Label(header_frame, text=f"User: {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
     username_label.pack(side="right", padx=(0, 10))
 
 
@@ -224,7 +224,7 @@ def show_admin_form(real_username):
     create_button = ttk.Button(form_container, text="Create Account", command=create_account, style="TButton")
     create_button.grid(row=len(labels), column=0, columnspan=2, pady=10)
 
-def show_teacher_form(real_username):
+def show_teacher_form(real_name):
     for widget in content_frame.winfo_children():
         widget.destroy()
 
@@ -234,7 +234,7 @@ def show_teacher_form(real_username):
     title_label = tk.Label(header_frame, text="Teacher Dashboard", font=("Arial", 16), fg=text_color, bg=bg_color)
     title_label.pack(side="left", padx=(10, 0))
 
-    username_label = tk.Label(header_frame, text=f"User: {real_username}", font=("Arial", 12), fg=text_color, bg=bg_color)
+    username_label = tk.Label(header_frame, text=f"User: {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
     username_label.pack(side="right", padx=(0, 10))
 
     separator = tk.Frame(content_frame, height=2, bg="white")
@@ -303,7 +303,7 @@ def show_teacher_form(real_username):
     create_button = ttk.Button(form_container, text="Create Account", command=create_account, style="TButton")
     create_button.grid(row=len(labels), column=0, columnspan=2, pady=10)
 
-def show_student_form(real_username):
+def show_student_form(real_name):
     for widget in content_frame.winfo_children():
         widget.destroy()
 
@@ -313,7 +313,7 @@ def show_student_form(real_username):
     title_label = tk.Label(header_frame, text="Student Dashboard", font=("Arial", 16), fg=text_color, bg=bg_color)
     title_label.pack(side="left", padx=(10, 0))
 
-    username_label = tk.Label(header_frame, text=f"User: {real_username}", font=("Arial", 12), fg=text_color, bg=bg_color)
+    username_label = tk.Label(header_frame, text=f"User: {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
     username_label.pack(side="right", padx=(0, 10))
 
     separator = tk.Frame(content_frame, height=2, bg="white")
@@ -383,7 +383,7 @@ def show_student_form(real_username):
     create_button = ttk.Button(form_container, text="Create Account", command=create_account, style="TButton")
     create_button.grid(row=len(labels), column=0, columnspan=2, pady=10)
 
-def show_settings_page(real_username):
+def show_settings_page(real_name):
     for widget in content_frame.winfo_children():
         widget.destroy()
 
@@ -393,7 +393,7 @@ def show_settings_page(real_username):
     title_label = tk.Label(header_frame, text="Settings", font=("Arial", 16), fg=text_color, bg=bg_color)
     title_label.pack(side="left", padx=(10, 0))
 
-    username_label = tk.Label(header_frame, text=f"User: {real_username}", font=("Arial", 12), fg=text_color, bg=bg_color)
+    username_label = tk.Label(header_frame, text=f"User: {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
     username_label.pack(side="right", padx=(0, 10))
 
     separator = tk.Frame(content_frame, height=2, bg="white")
@@ -462,25 +462,29 @@ def show_login_page():
             if connection:
                 cursor = connection.cursor()
                 if role == "Admin":
-                    cursor.execute("SELECT username FROM Admin WHERE username = %s AND password = %s", (username, password))
+                    cursor.execute("SELECT CONCAT(first_name, ' ', last_name) FROM Admin WHERE username = %s AND password = %s", (username, password))
                 elif role == "Teacher":
-                    cursor.execute("SELECT username FROM Teacher WHERE username = %s AND password = %s", (username, password))
+                    cursor.execute("SELECT CONCAT(first_name, ' ', last_name) FROM Teacher WHERE username = %s AND password = %s", (username, password))
                 elif role == "Student":
-                    cursor.execute("SELECT username FROM Student WHERE username = %s AND password = %s", (username, password))
+                    cursor.execute("SELECT CONCAT(first_name, ' ', last_name) FROM Student WHERE username = %s AND password = %s", (username, password))
 
                 result = cursor.fetchone()
                 cursor.close()
                 connection.close()
 
                 if result:
-                    real_username = result[0] 
-                    show_main_interface(real_username) if role == "Admin" else show_blank_page(role)
+                    real_name = result[0]
+                    print(real_name)
+                    show_main_interface(real_name) if role == "Admin" else show_blank_page(role)
                 else:
                     messagebox.showerror("Login Error", "Invalid username or password")
             else:
                 messagebox.showerror("Database Error", "Unable to connect to the database.")
         else:
             messagebox.showerror("Login Error", "Please enter username, password, and select a role.")
+
+    login_button = ttk.Button(right_frame, text="Login", command=login, style="TButton")
+    login_button.pack(pady=10)
 
     login_button = ttk.Button(right_frame, text="Login", command=login, style="TButton")
     login_button.pack(pady=10)
