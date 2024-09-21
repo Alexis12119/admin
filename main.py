@@ -135,13 +135,13 @@ def show_home_page(real_name):
     button_frame = tk.Frame(content_frame, bg=bg_color)
     button_frame.pack()
 
-    admin_button = ttk.Button(button_frame, text="ADMIN", command=show_admin_form, style="TButton")
+    admin_button = ttk.Button(button_frame, text="ADMIN", command=lambda: show_admin_form(real_name))
     admin_button.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
-    teacher_button = ttk.Button(button_frame, text="TEACHER", command=show_teacher_form, style="TButton")
+    teacher_button = ttk.Button(button_frame, text="TEACHER", command=lambda: show_teacher_form(real_name), style="TButton")
     teacher_button.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
 
-    student_button = ttk.Button(button_frame, text="STUDENT", command=show_student_form, style="TButton")
+    student_button = ttk.Button(button_frame, text="STUDENT", command=lambda: show_student_form(real_name), style="TButton")
     student_button.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
 
 
