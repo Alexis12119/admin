@@ -369,7 +369,12 @@ def show_settings_page():
         button = ttk.Button(settings_frame, text=option, style="TButton")
         button.pack(pady=5)
 
-    logout_button = ttk.Button(settings_frame, text="Logout", command=show_login_page, style="TButton")
+    def confirm_logout():
+        confirmation = messagebox.askyesno("Confirm Logout", "Are you sure you want to log out?")
+        if confirmation:
+            show_login_page()
+
+    logout_button = ttk.Button(settings_frame, text="Logout", command=confirm_logout, style="TButton")
     logout_button.pack(pady=5)
 
 def show_login_page():
