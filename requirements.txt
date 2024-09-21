@@ -1,0 +1,4 @@
+pillow
+mysql-connector-python
+requests
+tk
