@@ -98,7 +98,7 @@ def show_home_page(real_name):
         widget.destroy()
 
     header_frame = tk.Frame(content_frame, bg=bg_color)
-    header_frame.pack(pady=(10, 0), fill="x")
+    header_frame.pack(pady=(10, 0), fill="x", anchor="center")
 
     title_label = tk.Label(header_frame, text="Home", font=("Arial", 16), fg=text_color, bg=bg_color)
     title_label.pack(side="left", padx=(10, 0))
@@ -107,26 +107,30 @@ def show_home_page(real_name):
     username_label.pack(side="right", padx=(0, 10))
 
     line = tk.Frame(content_frame, height=1, bg="white")
-    line.pack(fill=tk.X, padx=10)
+    line.pack(fill="x", padx=20, pady=(0, 30))
 
     welcome_label = tk.Label(content_frame, text="WELCOME ADMIN!", font=("Arial", 26, "bold"), fg=button_bg_color, bg=bg_color)
-    welcome_label.pack()
+    welcome_label.pack(pady=20, anchor="center")
 
     prompt_label = tk.Label(content_frame, text="Who do you want to create an account?", font=("Arial", 12), bg=bg_color, fg=text_color)
-    prompt_label.pack(pady=10)
+    prompt_label.pack(pady=10, anchor="center")
 
     button_frame = tk.Frame(content_frame, bg=bg_color)
-    button_frame.pack()
+    button_frame.pack(anchor="center", pady=10)
+
+    button_frame.grid_columnconfigure((0, 1, 2), weight=1)
 
     admin_button = ttk.Button(button_frame, text="ADMIN", command=lambda: show_admin_form(real_name))
     admin_button.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
-    teacher_button = ttk.Button(button_frame, text="TEACHER", command=lambda: show_teacher_form(real_name), style="TButton")
+    teacher_button = ttk.Button(button_frame, text="TEACHER", command=lambda: show_teacher_form(real_name))
     teacher_button.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
 
-    student_button = ttk.Button(button_frame, text="STUDENT", command=lambda: show_student_form(real_name), style="TButton")
+    student_button = ttk.Button(button_frame, text="STUDENT", command=lambda: show_student_form(real_name))
     student_button.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
 
+    content_frame.grid_rowconfigure(0, weight=1)
+    content_frame.grid_columnconfigure(0, weight=1)
 
 def show_admin_form(real_name):
     for widget in content_frame.winfo_children():
@@ -142,7 +146,7 @@ def show_admin_form(real_name):
     username_label.pack(side="right", padx=(0, 10))
 
     line = tk.Frame(content_frame, height=1, bg="white")
-    line.pack(fill="x", padx=20, pady=(0, 10))
+    line.pack(fill="x", padx=20, pady=(0, 30))
 
     form_container = tk.Frame(content_frame, bg=form_bg_color, padx=20, pady=20)  # Adjusted padding
     form_container.pack(padx=20, pady=(0, 20))
@@ -219,7 +223,7 @@ def show_teacher_form(real_name):
     username_label.pack(side="right", padx=(0, 10))
 
     line = tk.Frame(content_frame, height=1, bg="white")
-    line.pack(fill="x", padx=20, pady=(0, 10))
+    line.pack(fill="x", padx=20, pady=(0, 30))
 
     form_container = tk.Frame(content_frame, bg=form_bg_color, padx=20, pady=20)
     form_container.pack(padx=20, pady=(0, 20))
@@ -298,7 +302,7 @@ def show_student_form(real_name):
     username_label.pack(side="right", padx=(0, 10))
 
     line = tk.Frame(content_frame, height=1, bg="white")
-    line.pack(fill="x", padx=20, pady=(0, 10))
+    line.pack(fill="x", padx=20, pady=(0, 30))
 
     form_container = tk.Frame(content_frame, bg=form_bg_color, padx=20, pady=20)
     form_container.pack(padx=20, pady=(0, 20))
@@ -378,7 +382,7 @@ def show_settings_page(real_name):
     username_label.pack(side="right", padx=(0, 10))
 
     line = tk.Frame(content_frame, height=1, bg="white")
-    line.pack(fill="x", padx=20, pady=(0, 10))
+    line.pack(fill="x", padx=20, pady=(0, 30))
 
     options = ["Language", "About", "Help & Support"]
 
