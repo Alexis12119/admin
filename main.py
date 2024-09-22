@@ -4,8 +4,6 @@ from tkinter import messagebox
 from mysql.connector import Error
 from db import create_connection
 
-image_url = "https://www.example.com/placeholder.png"
-
 window = tk.Tk()
 window.title("E-Learning")
 window.geometry("800x400")
@@ -76,22 +74,6 @@ def show_main_interface(real_name):
     setting_button.pack(pady=10)
 
     show_home_page(real_name)
-
-def show_blank_page(role):
-    for widget in window.winfo_children():
-        widget.destroy()
-
-    blank_frame = tk.Frame(window, bg=bg_color)
-    blank_frame.pack(expand=True)
-
-    welcome_label = tk.Label(blank_frame, text=f"Welcome, {role}!", font=("Arial", 20), bg=bg_color, fg=text_color)
-    welcome_label.pack(pady=20)
-
-    message_label = tk.Label(blank_frame, text="This is a blank page for your role.", font=("Arial", 14), bg=bg_color, fg=text_color)
-    message_label.pack(pady=10)
-
-    back_button = ttk.Button(blank_frame, text="Back to Login", command=show_login_page, style="TButton")
-    back_button.pack(pady=10)
 
 def show_home_page(real_name):
     for widget in content_frame.winfo_children():
@@ -401,15 +383,56 @@ def show_settings_page(real_name):
     logout_button = ttk.Button(settings_frame, text="Logout", command=confirm_logout, style="TButton")
     logout_button.pack(pady=5)
 
-
-def show_login_page():
-    global toggle_button 
-    toggle_button = None
-
+def create_main_frame():
+    global content_frame
+    
     for widget in window.winfo_children():
         widget.destroy()
+    
+    content_frame = tk.Frame(window, bg=bg_color)
+    content_frame.pack(expand=True, fill="both")
+    
+    return content_frame
 
-    main_frame = tk.Frame(window)
+def show_student_dashboard(real_name):
+    content_frame = create_main_frame()
+
+    header_frame = tk.Frame(content_frame, bg=bg_color)
+    header_frame.pack(pady=(10, 0), fill="x")
+
+    title_label = tk.Label(header_frame, text="Student Dashboard", font=("Arial", 16, "bold"), fg=text_color, bg=bg_color)
+    title_label.pack(side="left", padx=(10, 0))
+
+    username_label = tk.Label(header_frame, text=f"Welcome, {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
+    username_label.pack(side="right", padx=(0, 10))
+
+    line = tk.Frame(content_frame, height=1, bg=text_color)
+    line.pack(fill="x", padx=20, pady=(10, 30))
+
+    buttons_frame = tk.Frame(content_frame, bg=bg_color)
+    buttons_frame.pack(pady=(20, 10))
+
+    def on_button_click(activity):
+        messagebox.showinfo("Button Clicked", f"You clicked: {activity}")
+
+    # Create buttons for the dashboard
+    button1 = ttk.Button(buttons_frame, text="Sining at Aktibidad", command=lambda: on_button_click("Sining at Aktibidad"), style="TButton")
+    button1.pack(pady=10, padx=20, fill="x")
+
+    button2 = ttk.Button(buttons_frame, text="Alamat", command=lambda: on_button_click("Alamat"), style="TButton")
+    button2.pack(pady=10, padx=20, fill="x")
+
+    button3 = ttk.Button(buttons_frame, text="Mga Aralin", command=lambda: on_button_click("Mga Aralin"), style="TButton")
+    button3.pack(pady=10, padx=20, fill="x")
+
+    logout_button = ttk.Button(buttons_frame, text="Logout", command=show_login_page, style="Logout.TButton")
+    logout_button.pack(pady=(30, 10), padx=20, fill="x")
+
+def show_login_page():
+    global content_frame
+    content_frame = create_main_frame()
+
+    main_frame = tk.Frame(content_frame)
     main_frame.pack(expand=True, fill="both")
 
     left_frame = tk.Frame(main_frame, bg="white")
@@ -459,8 +482,12 @@ def show_login_page():
 
                 if result:
                     real_name = result[0]
-                    print(real_name)
-                    show_main_interface(real_name) if role == "Admin" else show_blank_page(role)
+                    if role == "Admin":
+                        show_main_interface(real_name)
+                    elif role == "Student":
+                        show_student_dashboard(real_name)
+                    else:
+                        show_teacher_dashboard(real_name)
                 else:
                     messagebox.showerror("Login Error", "Invalid username or password")
             else:
@@ -470,6 +497,40 @@ def show_login_page():
 
     login_button = ttk.Button(right_frame, text="Login", command=login, style="TButton")
     login_button.pack(pady=10)
+
+def show_teacher_dashboard(real_name):
+  content_frame = create_main_frame()
+
+  header_frame = tk.Frame(content_frame, bg=bg_color)
+  header_frame.pack(pady=(10, 0), fill="x")
+
+  title_label = tk.Label(header_frame, text="Teacher Dashboard", font=("Arial", 16, "bold"), fg=text_color, bg=bg_color)
+  title_label.pack(side="left", padx=(10, 0))
+
+  username_label = tk.Label(header_frame, text=f"Welcome, {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
+  username_label.pack(side="right", padx=(0, 10))
+
+  line = tk.Frame(content_frame, height=1, bg=text_color)
+  line.pack(fill="x", padx=20, pady=(10, 30))
+
+  buttons_frame = tk.Frame(content_frame, bg=bg_color)
+  buttons_frame.pack(pady=(20, 10))
+
+  def on_button_click(activity):
+    # Implement functionality for teacher actions based on activity
+    pass
+
+  button1 = ttk.Button(buttons_frame, text="Manage Students", command=lambda: on_button_click("Manage Students"), style="TButton")
+  button1.pack(pady=10, padx=20, fill="x")
+
+  button2 = ttk.Button(buttons_frame, text="Create Assignments", command=lambda: on_button_click("Create Assignments"), style="TButton")
+  button2.pack(pady=10, padx=20, fill="x")
+
+  button3 = ttk.Button(buttons_frame, text="View Class Progress", command=lambda: on_button_click("View Class Progress"), style="TButton")
+  button3.pack(pady=10, padx=20, fill="x")
+
+  logout_button = ttk.Button(buttons_frame, text="Logout", command=show_login_page, style="Logout.TButton")
+  logout_button.pack(pady=(30, 10), padx=20, fill="x")
 
 style = ttk.Style()
 style.configure("TButton",
