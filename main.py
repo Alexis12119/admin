@@ -26,8 +26,6 @@ toggle_button = None
 window.grid_columnconfigure(2, weight=1)
 window.grid_rowconfigure(0, weight=1)
 
-
-
 def show_main_interface(real_name):
     global sidebar_frame, content_frame
     
@@ -42,10 +40,6 @@ def show_main_interface(real_name):
     separator_frame.grid(row=0, column=1, sticky="ns")
     content_frame.grid(row=0, column=2, sticky="nsew")
 
-    window.grid_columnconfigure(2, weight=1)  # Make content_frame responsive
-    window.grid_rowconfigure(0, weight=1)  # Allow row to expand
-
-    # Sidebar content
     icon_placeholder = tk.Frame(sidebar_frame, width=50, height=50, bg="white")
     icon_placeholder.pack(pady=(5, 10), padx=10)
 
@@ -59,11 +53,11 @@ def show_main_interface(real_name):
               background=[("active", bg_color)],
               foreground=[("active", text_color)])
 
-    # Add a horizontal line
+     # Add a horizontal line
     line = tk.Frame(sidebar_frame, height=1, bg="white")
     line.pack(fill=tk.X, padx=10)
 
-    # Sidebar buttons
+
     home_button = ttk.Button(sidebar_frame, text="    Home", command=lambda: show_home_page(real_name), style=sidebar_button_style)
     home_button.pack(pady=(5, 10))
 
@@ -83,6 +77,7 @@ def show_main_interface(real_name):
     setting_button.pack(pady=10)
 
     show_home_page(real_name)
+
 def show_blank_page(role):
     for widget in window.winfo_children():
         widget.destroy()
@@ -149,9 +144,11 @@ def show_home_page(real_name):
     student_button = ttk.Button(button_frame, text="STUDENT", command=lambda: show_student_form(real_name), style="TButton")
     student_button.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
 
+
 def show_admin_form(real_name):
     for widget in content_frame.winfo_children():
         widget.destroy()
+
 
     header_frame = tk.Frame(content_frame, bg=bg_color)
     header_frame.pack(pady=(10, 0), fill="x")
@@ -162,14 +159,13 @@ def show_admin_form(real_name):
     username_label = tk.Label(header_frame, text=f"User: {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
     username_label.pack(side="right", padx=(0, 10))
 
+
     separator = tk.Frame(content_frame, height=2, bg="white")
     separator.pack(fill="x", padx=20, pady=(0, 10))
 
-    # Form container with scrollable functionality for small screens
-    form_container = tk.Frame(content_frame, bg=form_bg_color, padx=20, pady=20)
-    form_container.pack(fill="both", expand=True, padx=20, pady=(0, 20))
+    form_container = tk.Frame(content_frame, bg=form_bg_color, padx=20, pady=20)  # Adjusted padding
+    form_container.pack(padx=20, pady=(0, 20))
 
-    form_container.grid_columnconfigure(1, weight=1)
 
     labels = ["Admin Username", "Admin First Name", "Admin Last Name", "Admin Email", "Admin ID", "Password"]
     entries = {}
@@ -177,8 +173,7 @@ def show_admin_form(real_name):
     for i, label in enumerate(labels):
         tk.Label(form_container, text=label, bg=form_bg_color, fg=text_color).grid(row=i, column=0, padx=10, pady=5, sticky="e")
         entry = ttk.Entry(form_container)
-        entry.grid(row=i, column=1, padx=10, pady=5, sticky="ew")  # Make entry fields responsive
-        form_container.grid_columnconfigure(1, weight=1)  # Enable entry to expand horizontally
+        entry.grid(row=i, column=1, padx=10, pady=5, sticky="w")
         entries[label] = entry
 
     def create_account():
@@ -190,12 +185,15 @@ def show_admin_form(real_name):
         password = entries["Password"].get()
 
         if all([admin_username, admin_first_name, admin_last_name, admin_email, admin_id]):
+            # Validate ID
             if not admin_id.isdigit():
                 messagebox.showerror("Invalid Input", "Admin ID must be an integer.")
                 return
+            # Validate non-numeric fields
             if not (admin_username.isalpha() and admin_first_name.isalpha() and admin_last_name.isalpha()):
                 messagebox.showerror("Invalid Input", "Username, First Name, and Last Name must contain only alphabetic characters.")
                 return
+           # Validate email format (simple check)
             if "@" not in admin_email or "." not in admin_email:
                 messagebox.showerror("Invalid Input", "Please enter a valid email address.")
                 return
@@ -204,6 +202,7 @@ def show_admin_form(real_name):
                 connection = create_connection()
                 if connection:
                     cursor = connection.cursor()
+                    # Check if ID already exists
                     cursor.execute("SELECT COUNT(*) FROM Admin WHERE admin_id = %s", (admin_id,))
                     if cursor.fetchone()[0] > 0:
                         messagebox.showerror("ID Exists", "An account with this Admin ID already exists.")
@@ -223,7 +222,7 @@ def show_admin_form(real_name):
             messagebox.showwarning("Incomplete Form", "Please fill out all fields!")
 
     create_button = ttk.Button(form_container, text="Create Account", command=create_account, style="TButton")
-    create_button.grid(row=len(labels), column=0, columnspan=2, pady=10, sticky="ew")
+    create_button.grid(row=len(labels), column=0, columnspan=2, pady=10)
 
 def show_teacher_form(real_name):
     for widget in content_frame.winfo_children():
@@ -241,11 +240,8 @@ def show_teacher_form(real_name):
     separator = tk.Frame(content_frame, height=2, bg="white")
     separator.pack(fill="x", padx=20, pady=(0, 10))
 
-    # Form container with scrollable functionality for small screens
     form_container = tk.Frame(content_frame, bg=form_bg_color, padx=20, pady=20)
-    form_container.pack(fill="both", expand=True, padx=20, pady=(0, 20))
-
-    form_container.grid_columnconfigure(1, weight=1)  # Make entry fields responsive
+    form_container.pack(padx=20, pady=(0, 20))
 
     labels = ["Teacher Username", "Teacher First Name", "Teacher Last Name", "Teacher Email", "Teacher ID", "Password"]
     entries = {}
@@ -253,8 +249,7 @@ def show_teacher_form(real_name):
     for i, label in enumerate(labels):
         tk.Label(form_container, text=label, bg=form_bg_color, fg=text_color).grid(row=i, column=0, padx=10, pady=5, sticky="e")
         entry = ttk.Entry(form_container)
-        entry.grid(row=i, column=1, padx=10, pady=5, sticky="ew")  # Make entry fields responsive
-        form_container.grid_columnconfigure(1, weight=1)  # Enable entry to expand horizontally
+        entry.grid(row=i, column=1, padx=10, pady=5, sticky="w")
         entries[label] = entry
 
     def create_account():
@@ -266,20 +261,27 @@ def show_teacher_form(real_name):
         password = entries["Password"].get()
 
         if all([teacher_username, teacher_first_name, teacher_last_name, teacher_email, teacher_id]):
+            # Validate ID
             if not teacher_id.isdigit():
                 messagebox.showerror("Invalid Input", "Teacher ID must be an integer.")
                 return
+            
+            # Validate non-numeric fields
             if not (teacher_username.isalpha() and teacher_first_name.isalpha() and teacher_last_name.isalpha()):
                 messagebox.showerror("Invalid Input", "Username, First Name, and Last Name must contain only alphabetic characters.")
                 return
+            
+            # Validate email format (simple check)
             if "@" not in teacher_email or "." not in teacher_email:
                 messagebox.showerror("Invalid Input", "Please enter a valid email address.")
                 return
+
             confirmation = messagebox.askokcancel("Confirm Account Creation", "Are you sure you want to create this account?")
             if confirmation:
                 connection = create_connection()
                 if connection:
                     cursor = connection.cursor()
+                    # Check if ID already exists
                     cursor.execute("SELECT COUNT(*) FROM Teacher WHERE teacher_id = %s", (teacher_id,))
                     if cursor.fetchone()[0] > 0:
                         messagebox.showerror("ID Exists", "An account with this Teacher ID already exists.")
@@ -299,8 +301,7 @@ def show_teacher_form(real_name):
             messagebox.showwarning("Incomplete Form", "Please fill out all fields!")
 
     create_button = ttk.Button(form_container, text="Create Account", command=create_account, style="TButton")
-    create_button.grid(row=len(labels), column=0, columnspan=2, pady=10, sticky="ew")
-
+    create_button.grid(row=len(labels), column=0, columnspan=2, pady=10)
 
 def show_student_form(real_name):
     for widget in content_frame.winfo_children():
@@ -318,11 +319,8 @@ def show_student_form(real_name):
     separator = tk.Frame(content_frame, height=2, bg="white")
     separator.pack(fill="x", padx=20, pady=(0, 10))
 
-    # Form container with scrollable functionality for small screens
     form_container = tk.Frame(content_frame, bg=form_bg_color, padx=20, pady=20)
-    form_container.pack(fill="both", expand=True, padx=20, pady=(0, 20))
-
-    form_container.grid_columnconfigure(1, weight=1)
+    form_container.pack(padx=20, pady=(0, 20))
 
     labels = ["Student Username", "Student First Name", "Student Last Name", "Guardian's Name", "Contact Number", "Student ID", "Password"]
     entries = {}
@@ -330,8 +328,7 @@ def show_student_form(real_name):
     for i, label in enumerate(labels):
         tk.Label(form_container, text=label, bg=form_bg_color, fg=text_color).grid(row=i, column=0, padx=10, pady=5, sticky="e")
         entry = ttk.Entry(form_container)
-        entry.grid(row=i, column=1, padx=10, pady=5, sticky="ew")  # Make entry fields responsive
-        form_container.grid_columnconfigure(1, weight=1)  # Enable entry to expand horizontally
+        entry.grid(row=i, column=1, padx=10, pady=5, sticky="w")
         entries[label] = entry
 
     def create_account():
@@ -344,20 +341,27 @@ def show_student_form(real_name):
         password = entries["Password"].get()
 
         if all([student_username, student_first_name, student_last_name, guardian_name, contact_number, student_id]):
+            # Validate ID
             if not student_id.isdigit():
                 messagebox.showerror("Invalid Input", "Student ID must be an integer.")
                 return
+            
+            # Validate Contact Number
             if not contact_number.isdigit():
                 messagebox.showerror("Invalid Input", "Contact Number must be an integer.")
                 return
+            
+            # Validate non-numeric fields
             if not (student_username.isalpha() and student_first_name.isalpha() and student_last_name.isalpha() and guardian_name.isalpha()):
                 messagebox.showerror("Invalid Input", "Username, First Name, Last Name, and Guardian's Name must contain only alphabetic characters.")
                 return
+            
             confirmation = messagebox.askokcancel("Confirm Account Creation", "Are you sure you want to create this account?")
             if confirmation:
                 connection = create_connection()
                 if connection:
                     cursor = connection.cursor()
+                    # Check if ID already exists
                     cursor.execute("SELECT COUNT(*) FROM Student WHERE student_id = %s", (student_id,))
                     if cursor.fetchone()[0] > 0:
                         messagebox.showerror("ID Exists", "An account with this Student ID already exists.")
@@ -377,7 +381,8 @@ def show_student_form(real_name):
             messagebox.showwarning("Incomplete Form", "Please fill out all fields!")
 
     create_button = ttk.Button(form_container, text="Create Account", command=create_account, style="TButton")
-    create_button.grid(row=len(labels), column=0, columnspan=2, pady=10, sticky="ew")
+    create_button.grid(row=len(labels), column=0, columnspan=2, pady=10)
+
 def show_settings_page(real_name):
     for widget in content_frame.winfo_children():
         widget.destroy()
