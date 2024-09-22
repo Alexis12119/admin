@@ -394,20 +394,14 @@ def create_main_frame():
     
     return content_frame
 
-def show_student_dashboard(real_name):
+def show_student_dashboard():
     content_frame = create_main_frame()
 
     header_frame = tk.Frame(content_frame, bg=bg_color)
-    header_frame.pack(pady=(10, 0), fill="x")
+    header_frame.pack(pady=(10, 30), fill="x")
 
-    title_label = tk.Label(header_frame, text="Student Dashboard", font=("Arial", 16, "bold"), fg=text_color, bg=bg_color)
-    title_label.pack(side="left", padx=(10, 0))
-
-    username_label = tk.Label(header_frame, text=f"Welcome, {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
-    username_label.pack(side="right", padx=(0, 10))
-
-    line = tk.Frame(content_frame, height=1, bg=text_color)
-    line.pack(fill="x", padx=20, pady=(10, 30))
+    logo_placeholder = tk.Frame(content_frame, width=500, height=150, bg="white")
+    logo_placeholder.pack(pady=(5, 10), padx=10)
 
     buttons_frame = tk.Frame(content_frame, bg=bg_color)
     buttons_frame.pack(pady=(20, 10))
@@ -415,18 +409,17 @@ def show_student_dashboard(real_name):
     def on_button_click(activity):
         messagebox.showinfo("Button Clicked", f"You clicked: {activity}")
 
-    # Create buttons for the dashboard
     button1 = ttk.Button(buttons_frame, text="Sining at Aktibidad", command=lambda: on_button_click("Sining at Aktibidad"), style="TButton")
-    button1.pack(pady=10, padx=20, fill="x")
+    button1.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
-    button2 = ttk.Button(buttons_frame, text="Alamat", command=lambda: on_button_click("Alamat"), style="TButton")
-    button2.pack(pady=10, padx=20, fill="x")
+    button2 = ttk.Button(buttons_frame, text="Alamat", command=lambda: on_button_click("Alamat"), style="TButton") 
+    button2.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
 
     button3 = ttk.Button(buttons_frame, text="Mga Aralin", command=lambda: on_button_click("Mga Aralin"), style="TButton")
-    button3.pack(pady=10, padx=20, fill="x")
+    button3.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
 
-    logout_button = ttk.Button(buttons_frame, text="Logout", command=show_login_page, style="Logout.TButton")
-    logout_button.pack(pady=(30, 10), padx=20, fill="x")
+    button4 = ttk.Button(buttons_frame, text="Logout", command=show_login_page, style="TButton")
+    button4.grid(row=0, column=3, padx=10, pady=10, sticky="nsew")
 
 def show_login_page():
     global content_frame
@@ -485,7 +478,7 @@ def show_login_page():
                     if role == "Admin":
                         show_main_interface(real_name)
                     elif role == "Student":
-                        show_student_dashboard(real_name)
+                        show_student_dashboard()
                     else:
                         show_teacher_dashboard(real_name)
                 else:
@@ -517,9 +510,8 @@ def show_teacher_dashboard(real_name):
   buttons_frame.pack(pady=(20, 10))
 
   def on_button_click(activity):
-    # Implement functionality for teacher actions based on activity
-    pass
-
+      pass
+   
   button1 = ttk.Button(buttons_frame, text="Manage Students", command=lambda: on_button_click("Manage Students"), style="TButton")
   button1.pack(pady=10, padx=20, fill="x")
 
