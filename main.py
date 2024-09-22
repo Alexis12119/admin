@@ -486,9 +486,6 @@ def show_login_page():
     login_button = ttk.Button(right_frame, text="Login", command=login, style="TButton")
     login_button.pack(pady=10)
 
-    login_button = ttk.Button(right_frame, text="Login", command=login, style="TButton")
-    login_button.pack(pady=10)
-
 style = ttk.Style()
 style.configure("TButton",
                 background=button_bg_color,
