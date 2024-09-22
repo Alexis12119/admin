@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-import requests
 from mysql.connector import Error
 from db import create_connection
 
@@ -94,19 +93,6 @@ def show_blank_page(role):
     back_button = ttk.Button(blank_frame, text="Back to Login", command=show_login_page, style="TButton")
     back_button.pack(pady=10)
 
-def get_image():
-    try:
-        response = requests.get(image_url, stream=True)
-        if response.status_code == 200:
-            response.raw.decode_content = True
-            return tk.PhotoImage(data=response.content)
-        else:
-            return None
-    except requests.exceptions.RequestException as e:
-        return e.response.status_code
-
-placeholder_image = get_image()
-
 def show_home_page(real_name):
     for widget in content_frame.winfo_children():
         widget.destroy()
@@ -117,16 +103,13 @@ def show_home_page(real_name):
     title_label = tk.Label(header_frame, text="Home", font=("Arial", 16), fg=text_color, bg=bg_color)
     title_label.pack(side="left", padx=(10, 0))
 
-    username_label = tk.Label(header_frame, text=f"User: {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
+    username_label = tk.Label(header_frame, text=f"{real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
     username_label.pack(side="right", padx=(0, 10))
 
-    separator = tk.Frame(content_frame, height=2, bg="white")
-    separator.pack(fill="x", padx=20, pady=(0, 10))
+    line = tk.Frame(content_frame, height=1, bg="white")
+    line.pack(fill=tk.X, padx=10)
 
-    image_label = tk.Label(content_frame, image=placeholder_image, bg=bg_color)
-    image_label.pack(pady=10)
-
-    welcome_label = tk.Label(content_frame, text="WELCOME ADMIN!", font=("Arial", 16), fg=button_bg_color, bg=bg_color)
+    welcome_label = tk.Label(content_frame, text="WELCOME ADMIN!", font=("Arial", 26, "bold"), fg=button_bg_color, bg=bg_color)
     welcome_label.pack()
 
     prompt_label = tk.Label(content_frame, text="Who do you want to create an account?", font=("Arial", 12), bg=bg_color, fg=text_color)
@@ -149,19 +132,17 @@ def show_admin_form(real_name):
     for widget in content_frame.winfo_children():
         widget.destroy()
 
-
     header_frame = tk.Frame(content_frame, bg=bg_color)
     header_frame.pack(pady=(10, 0), fill="x")
 
     title_label = tk.Label(header_frame, text="Admin Dashboard", font=("Arial", 16), fg=text_color, bg=bg_color)
     title_label.pack(side="left", padx=(10, 0))
 
-    username_label = tk.Label(header_frame, text=f"User: {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
+    username_label = tk.Label(header_frame, text=f"{real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
     username_label.pack(side="right", padx=(0, 10))
 
-
-    separator = tk.Frame(content_frame, height=2, bg="white")
-    separator.pack(fill="x", padx=20, pady=(0, 10))
+    line = tk.Frame(content_frame, height=1, bg="white")
+    line.pack(fill="x", padx=20, pady=(0, 10))
 
     form_container = tk.Frame(content_frame, bg=form_bg_color, padx=20, pady=20)  # Adjusted padding
     form_container.pack(padx=20, pady=(0, 20))
@@ -234,11 +215,11 @@ def show_teacher_form(real_name):
     title_label = tk.Label(header_frame, text="Teacher Dashboard", font=("Arial", 16), fg=text_color, bg=bg_color)
     title_label.pack(side="left", padx=(10, 0))
 
-    username_label = tk.Label(header_frame, text=f"User: {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
+    username_label = tk.Label(header_frame, text=f"{real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
     username_label.pack(side="right", padx=(0, 10))
 
-    separator = tk.Frame(content_frame, height=2, bg="white")
-    separator.pack(fill="x", padx=20, pady=(0, 10))
+    line = tk.Frame(content_frame, height=1, bg="white")
+    line.pack(fill="x", padx=20, pady=(0, 10))
 
     form_container = tk.Frame(content_frame, bg=form_bg_color, padx=20, pady=20)
     form_container.pack(padx=20, pady=(0, 20))
@@ -313,11 +294,11 @@ def show_student_form(real_name):
     title_label = tk.Label(header_frame, text="Student Dashboard", font=("Arial", 16), fg=text_color, bg=bg_color)
     title_label.pack(side="left", padx=(10, 0))
 
-    username_label = tk.Label(header_frame, text=f"User: {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
+    username_label = tk.Label(header_frame, text=f"{real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
     username_label.pack(side="right", padx=(0, 10))
 
-    separator = tk.Frame(content_frame, height=2, bg="white")
-    separator.pack(fill="x", padx=20, pady=(0, 10))
+    line = tk.Frame(content_frame, height=1, bg="white")
+    line.pack(fill="x", padx=20, pady=(0, 10))
 
     form_container = tk.Frame(content_frame, bg=form_bg_color, padx=20, pady=20)
     form_container.pack(padx=20, pady=(0, 20))
@@ -393,11 +374,11 @@ def show_settings_page(real_name):
     title_label = tk.Label(header_frame, text="Settings", font=("Arial", 16), fg=text_color, bg=bg_color)
     title_label.pack(side="left", padx=(10, 0))
 
-    username_label = tk.Label(header_frame, text=f"User: {real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
+    username_label = tk.Label(header_frame, text=f"{real_name}", font=("Arial", 12), fg=text_color, bg=bg_color)
     username_label.pack(side="right", padx=(0, 10))
 
-    separator = tk.Frame(content_frame, height=2, bg="white")
-    separator.pack(fill="x", padx=20, pady=(0, 10))
+    line = tk.Frame(content_frame, height=1, bg="white")
+    line.pack(fill="x", padx=20, pady=(0, 10))
 
     options = ["Language", "About", "Help & Support"]
 
