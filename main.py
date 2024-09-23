@@ -417,7 +417,12 @@ def show_student_dashboard():
     button3 = ttk.Button(buttons_frame, text="Mga Aralin", command=lambda: on_button_click("Mga Aralin"), style="TButton")
     button3.grid(row=0, column=2, padx=10, pady=10, sticky="nsew")
 
-    button4 = ttk.Button(buttons_frame, text="Logout", command=show_login_page, style="TButton")
+    def confirm_logout():
+        confirmation = messagebox.askyesno("Confirm Logout", "Are you sure you want to log out?")
+        if confirmation:
+            show_login_page()
+
+    button4 = ttk.Button(buttons_frame, text="Logout", command=confirm_logout, style="TButton")
     button4.grid(row=0, column=3, padx=10, pady=10, sticky="nsew")
 
 def show_login_page():
@@ -549,7 +554,12 @@ def show_teacher_dashboard(real_name):
     help_button = ttk.Button(sidebar_frame, text="Help & Support", style="Sidebar.TButton")
     help_button.pack(pady=10, fill="x")
 
-    logout_button = ttk.Button(sidebar_frame, text="Logout", command=show_login_page, style="Sidebar.TButton")
+    def confirm_logout():
+        confirmation = messagebox.askyesno("Confirm Logout", "Are you sure you want to log out?")
+        if confirmation:
+            show_login_page()
+
+    logout_button = ttk.Button(sidebar_frame, text="Logout", command=confirm_logout, style="Sidebar.TButton")
     logout_button.pack(pady=(30, 10), fill="x")
 
     main_content_frame = tk.Frame(content_frame, bg=bg_color)
