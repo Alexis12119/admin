@@ -579,7 +579,7 @@ def show_login_page():
 
     role_label = tk.Label(right_frame, text="Role:", bg=bg_color, fg=text_color)
     role_label.pack()
-    role_combobox = ttk.Combobox(right_frame, values=["Admin", "Teacher", "Student"], state="readonly")
+    role_combobox = ttk.Combobox(right_frame, justify='center',values=["Admin", "Teacher", "Student"], state="readonly")
     role_combobox.set("Admin") 
     role_combobox.pack(pady=5)
 
