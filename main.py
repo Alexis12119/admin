@@ -493,74 +493,68 @@ def show_login_page():
 def show_teacher_dashboard(real_name):
     content_frame = create_main_frame()
 
-    header_frame = tk.Frame(content_frame, bg=bg_color)
-    header_frame.pack(pady=(10, 0), fill="x")
-
-    dashboard_label = tk.Label(header_frame, text="Dashboard", font=("Arial", 16), fg=text_color, bg=bg_color)
-    dashboard_label.pack(side="left", padx=10)
-
-    user_name_label = tk.Label(header_frame, text=real_name, font=("Arial", 12), fg=text_color, bg=bg_color)
-    user_name_label.pack(side="right", padx=10)
-
-    # Horizontal line separating header and sidebar
-    line = tk.Frame(content_frame, height=1, bg="white")
-    line.pack(fill=tk.X, padx=10, pady=(5, 0))
-
-    sidebar_frame = tk.Frame(content_frame, bg=bg_color)
-    sidebar_frame.pack(side="left", padx=20, pady=(10, 0))
-
-    # Vertical line for sidebar
-    sidebar_line = tk.Frame(content_frame, width=1, bg="white")
-    sidebar_line.pack(side="left", fill="y", padx=(5, 0))
-
-    # Circle container
-    circle_frame = tk.Frame(sidebar_frame, bg=bg_color)
-    circle_frame.pack(pady=(10, 0), padx=10)
+    circle_frame = tk.Frame(content_frame, bg=bg_color)
+    circle_frame.pack(pady=(10, 0), fill="x")
 
     circle_canvas = tk.Canvas(circle_frame, width=50, height=50, bg=bg_color, highlightthickness=0)
-    circle_canvas.pack(side="left")
+    circle_canvas.pack(side="left", padx=5)
     circle_canvas.create_oval(5, 5, 45, 45, fill="white")
 
-    # Label next to the circle
-    teacher_label = tk.Label(circle_frame, text="Teacher", font=("Arial", 12), fg=text_color, bg=bg_color)
-    teacher_label.pack(side="left", padx=(5, 0))
+    teacher_label = tk.Label(circle_frame, text="Teacher    ", font=("Arial", 12), fg=text_color, bg=bg_color)
+    teacher_label.pack(side="left", padx=5)
 
-    # Sidebar buttons
-    dashboard_button = ttk.Button(sidebar_frame, text="Dashboard", command=lambda: show_dashboard(real_name), style="Sidebar.TButton")
+    vertical_line = tk.Frame(circle_frame, width=1, bg="white")
+    vertical_line.pack(side="left", fill="y", padx=(5, 0))
+
+    real_name_label = tk.Label(circle_frame, text=real_name, font=("Arial", 12), fg=text_color, bg=bg_color)
+    real_name_label.pack(side="right", padx=5)
+
+    # Add the Dashboard label here
+    dashboard_label = tk.Label(circle_frame, text="Dashboard", font=("Arial", 12, "bold"), fg=text_color, bg=bg_color)
+    dashboard_label.pack(side="left", padx=(10, 0))
+
+    line = tk.Frame(content_frame, height=1, bg="white")
+    line.pack(fill=tk.X, padx=10)
+
+    sidebar_frame = tk.Frame(content_frame, bg=bg_color)
+    sidebar_frame.pack(side="left", padx=20, pady=(0, 0))
+
+    sidebar_line = tk.Frame(content_frame, width=1, bg="white")
+    sidebar_line.pack(side="left", fill="y", padx=(5, 0), pady=(10, 0))
+
+    dashboard_button = ttk.Button(sidebar_frame, text="Dashboard", style="Sidebar.TButton")
     dashboard_button.pack(pady=10, fill="x")
 
-    portfolio_button = ttk.Button(sidebar_frame, text="Portfolio", command=lambda: show_portfolio(real_name), style="Sidebar.TButton")
+    portfolio_button = ttk.Button(sidebar_frame, text="Portfolio", style="Sidebar.TButton")
     portfolio_button.pack(pady=10, fill="x")
 
-    students_button = ttk.Button(sidebar_frame, text="Students", command=lambda: show_students(real_name), style="Sidebar.TButton")
+    students_button = ttk.Button(sidebar_frame, text="Students", style="Sidebar.TButton")
     students_button.pack(pady=10, fill="x")
 
-    reports_button = ttk.Button(sidebar_frame, text="Reports", command=lambda: show_reports(real_name), style="Sidebar.TButton")
+    reports_button = ttk.Button(sidebar_frame, text="Reports", style="Sidebar.TButton")
     reports_button.pack(pady=10, fill="x")
 
     line = tk.Frame(sidebar_frame, height=1, bg="white")
-    line.pack(fill=tk.X, padx=10)
+    line.pack(fill="x", padx=10)
 
-    profile_button = ttk.Button(sidebar_frame, text="My Profile", command=lambda: show_profile(real_name), style="Sidebar.TButton")
+    profile_button = ttk.Button(sidebar_frame, text="My Profile", style="Sidebar.TButton")
     profile_button.pack(pady=10, fill="x")
 
-    settings_button = ttk.Button(sidebar_frame, text="Settings", command=lambda: show_settings(real_name), style="Sidebar.TButton")
+    settings_button = ttk.Button(sidebar_frame, text="Settings", style="Sidebar.TButton")
     settings_button.pack(pady=10, fill="x")
 
     line = tk.Frame(sidebar_frame, height=1, bg="white")
-    line.pack(fill=tk.X, padx=10)
+    line.pack(fill="x", padx=10)
 
-    help_button = ttk.Button(sidebar_frame, text="Help & Support", command=lambda: show_help(real_name), style="Sidebar.TButton")
+    help_button = ttk.Button(sidebar_frame, text="Help & Support", style="Sidebar.TButton")
     help_button.pack(pady=10, fill="x")
 
     logout_button = ttk.Button(sidebar_frame, text="Logout", command=show_login_page, style="Sidebar.TButton")
     logout_button.pack(pady=(30, 10), fill="x")
 
-    # Main content area
     main_content_frame = tk.Frame(content_frame, bg=bg_color)
     main_content_frame.pack(side="right", padx=20, pady=(10, 0), fill="both", expand=True)
 
-    # Grid layout for Students, Attendance, and Grades
     students_label = tk.Label(main_content_frame, text="Students: 30", font=("Arial", 14), fg=text_color, bg=bg_color)
     students_label.grid(row=0, column=0, padx=10, pady=10)
 
@@ -570,13 +564,13 @@ def show_teacher_dashboard(real_name):
     grades_label = tk.Label(main_content_frame, text="Grades: 89%", font=("Arial", 14), fg=text_color, bg=bg_color)
     grades_label.grid(row=0, column=2, padx=10, pady=10)
 
-    add_button = ttk.Button(main_content_frame, text="Add New", command=lambda: add_new_function(), style="Main.TButton")
+    add_button = ttk.Button(main_content_frame, text="Add New", style="Main.TButton")
     add_button.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
-    delete_button = ttk.Button(main_content_frame, text="Delete", command=lambda: delete_function(), style="Main.TButton")
+    delete_button = ttk.Button(main_content_frame, text="Delete", style="Main.TButton")
     delete_button.grid(row=1, column=1, padx=10, pady=10, sticky="ew")
 
-    edit_button = ttk.Button(main_content_frame, text="Edit", command=lambda: edit_function(), style="Main.TButton")
+    edit_button = ttk.Button(main_content_frame, text="Edit", style="Main.TButton")
     edit_button.grid(row=1, column=2, padx=10, pady=10, sticky="ew")
 
     lesson_label = tk.Label(main_content_frame, text="Lesson", font=("Arial", 14), fg=text_color, bg=bg_color)
@@ -586,9 +580,8 @@ def show_teacher_dashboard(real_name):
     sort_var.set("Sort by")
 
     sort_dropdown = ttk.OptionMenu(main_content_frame, sort_var, "Time", "Time", "Name", "Date")
-    sort_dropdown.grid(row=2, column=1, padx=10, pady=(10, 5), sticky="w")
+    sort_dropdown.grid(row=2, column=1, padx=10, pady=(10, 5), sticky="e")  # Align to the right
 
-    # Container squares without loop
     square1 = tk.Frame(main_content_frame, bg="white", width=100, height=100)
     square1.grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
 
