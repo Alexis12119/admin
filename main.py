@@ -453,11 +453,10 @@ def show_teacher_dashboard(real_name):
     line.pack(fill=tk.X, padx=10)
 
     sidebar_frame = tk.Frame(content_frame, bg=bg_color)
-    sidebar_frame.pack(side="left", padx=20, pady=(0, 0))
+    sidebar_frame.pack(side="left", padx=20, pady=(0, 0), anchor="n")
 
     sidebar_line = tk.Frame(content_frame, width=1, bg="white")
     sidebar_line.pack(side="left", fill="y", padx=(5, 0), pady=(10, 0))
-
     dashboard_button = ttk.Button(sidebar_frame, text="Dashboard", style="Sidebar.TButton")
     dashboard_button.pack(pady=10, fill="x")
 
