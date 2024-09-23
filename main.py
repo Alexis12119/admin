@@ -573,7 +573,7 @@ def show_teacher_dashboard(real_name):
     edit_button = ttk.Button(main_content_frame, text="Edit", style="Main.TButton")
     edit_button.grid(row=1, column=2, padx=10, pady=10, sticky="ew")
 
-    lesson_label = tk.Label(main_content_frame, text="Lesson", font=("Arial", 14), fg=text_color, bg=bg_color)
+    lesson_label = tk.Label(main_content_frame, text="Lessons", font=("Arial", 14), fg=text_color, bg=bg_color)
     lesson_label.grid(row=2, column=0, padx=10, pady=(10, 5), sticky="w")
 
     sort_var = tk.StringVar(main_content_frame)
