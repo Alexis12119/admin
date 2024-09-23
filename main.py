@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+
 from mysql.connector import Error
 from db import create_connection
 
@@ -425,76 +426,6 @@ def show_student_dashboard():
     button4 = ttk.Button(buttons_frame, text="Logout", command=confirm_logout, style="TButton")
     button4.grid(row=0, column=3, padx=10, pady=10, sticky="nsew")
 
-def show_login_page():
-    global content_frame
-    content_frame = create_main_frame()
-
-    main_frame = tk.Frame(content_frame)
-    main_frame.pack(expand=True, fill="both")
-
-    left_frame = tk.Frame(main_frame, bg="white")
-    left_frame.pack(side="right", expand=True, fill="both")
-
-    right_frame = tk.Frame(main_frame, bg=bg_color, padx=20, pady=20)
-    right_frame.pack(side="left", expand=True, fill="both")
-
-    title_label = tk.Label(right_frame, text="Login", font=("Arial", 30, "bold"), bg=bg_color, fg=button_bg_color)
-    title_label.pack(pady=20)
-
-    username_label = tk.Label(right_frame, text="Username:", bg=bg_color, fg=text_color)
-    username_label.pack()
-    username_entry = ttk.Entry(right_frame)
-    username_entry.pack(pady=5)
-
-    password_label = tk.Label(right_frame, text="Password:", bg=bg_color, fg=text_color)
-    password_label.pack()
-    password_entry = ttk.Entry(right_frame, show="*")
-    password_entry.pack(pady=5)
-
-    role_label = tk.Label(right_frame, text="Role:", bg=bg_color, fg=text_color)
-    role_label.pack()
-    role_combobox = ttk.Combobox(right_frame, values=["Admin", "Teacher", "Student"], state="readonly")
-    role_combobox.set("Admin") 
-    role_combobox.pack(pady=5)
-
-    def login():
-        username = username_entry.get()
-        password = password_entry.get()
-        role = role_combobox.get()
-        
-        if username and password and role:
-            connection = create_connection()
-            if connection:
-                cursor = connection.cursor()
-                if role == "Admin":
-                    cursor.execute("SELECT CONCAT(first_name, ' ', last_name) FROM Admin WHERE username = %s AND password = %s", (username, password))
-                elif role == "Teacher":
-                    cursor.execute("SELECT CONCAT(first_name, ' ', last_name) FROM Teacher WHERE username = %s AND password = %s", (username, password))
-                elif role == "Student":
-                    cursor.execute("SELECT CONCAT(first_name, ' ', last_name) FROM Student WHERE username = %s AND password = %s", (username, password))
-
-                result = cursor.fetchone()
-                cursor.close()
-                connection.close()
-
-                if result:
-                    real_name = result[0]
-                    if role == "Admin":
-                        show_main_interface(real_name)
-                    elif role == "Student":
-                        show_student_dashboard()
-                    else:
-                        show_teacher_dashboard(real_name)
-                else:
-                    messagebox.showerror("Login Error", "Invalid username or password")
-            else:
-                messagebox.showerror("Database Error", "Unable to connect to the database.")
-        else:
-            messagebox.showerror("Login Error", "Please enter username, password, and select a role.")
-
-    login_button = ttk.Button(right_frame, text="Login", command=login, style="TButton")
-    login_button.pack(pady=10)
-
 def show_teacher_dashboard(real_name):
     content_frame = create_main_frame()
 
@@ -608,6 +539,86 @@ def show_teacher_dashboard(real_name):
     style = ttk.Style()
     style.configure("Sidebar.TButton", background=bg_color, foreground=text_color)
     style.configure("Main.TButton", background=button_bg_color, foreground=text_color)
+
+def show_login_page():
+    global content_frame
+    content_frame = create_main_frame()
+    main_frame = tk.Frame(content_frame)
+    main_frame.pack(expand=True, fill="both")
+    left_frame = tk.Frame(main_frame, bg="white")
+    left_frame.pack(side="right", expand=True, fill="both")
+    right_frame = tk.Frame(main_frame, bg=bg_color, padx=20, pady=20)
+    right_frame.pack(side="left", expand=True, fill="both")
+    title_label = tk.Label(right_frame, text="Login", font=("Arial", 30, "bold"), bg=bg_color, fg=button_bg_color)
+    title_label.pack(pady=20)
+
+    style = ttk.Style()
+    style.configure('White.TButton', background="white", foreground='black')
+
+    username_label = tk.Label(right_frame, text="Username", bg=bg_color, fg=text_color)
+    username_label.pack()
+    username_entry = ttk.Entry(right_frame, width=30)
+    username_entry.pack(pady=5)
+
+    password_label = tk.Label(right_frame, text="Password", bg=bg_color, fg=text_color)
+    password_label.pack()
+    password_frame = tk.Frame(right_frame, bg=bg_color)
+    password_frame.pack(pady=5)
+    password_entry = ttk.Entry(password_frame, show="•", width=24)
+    password_entry.pack(side="left")
+
+    def toggle_password():
+        if password_entry.cget('show') == '':
+            password_entry.config(show='•')
+            show_hide_button.config(text='Show')
+        else:
+            password_entry.config(show='')
+            show_hide_button.config(text='Hide')
+
+    show_hide_button = ttk.Button(password_frame, text='Show',command=toggle_password,  width=6, style='White.TButton')
+    show_hide_button.pack(side="left")
+
+    role_label = tk.Label(right_frame, text="Role:", bg=bg_color, fg=text_color)
+    role_label.pack()
+    role_combobox = ttk.Combobox(right_frame, values=["Admin", "Teacher", "Student"], state="readonly")
+    role_combobox.set("Admin") 
+    role_combobox.pack(pady=5)
+
+    def login():
+        username = username_entry.get()
+        password = password_entry.get()
+        role = role_combobox.get()
+        
+        if username and password and role:
+            connection = create_connection()
+            if connection:
+                cursor = connection.cursor()
+                if role == "Admin":
+                    cursor.execute("SELECT CONCAT(first_name, ' ', last_name) FROM Admin WHERE username = %s AND password = %s", (username, password))
+                elif role == "Teacher":
+                    cursor.execute("SELECT CONCAT(first_name, ' ', last_name) FROM Teacher WHERE username = %s AND password = %s", (username, password))
+                elif role == "Student":
+                    cursor.execute("SELECT CONCAT(first_name, ' ', last_name) FROM Student WHERE username = %s AND password = %s", (username, password))
+                result = cursor.fetchone()
+                cursor.close()
+                connection.close()
+                if result:
+                    real_name = result[0]
+                    if role == "Admin":
+                        show_main_interface(real_name)
+                    elif role == "Student":
+                        show_student_dashboard()
+                    else:
+                        show_teacher_dashboard(real_name)
+                else:
+                    messagebox.showerror("Login Error", "Invalid username or password")
+            else:
+                messagebox.showerror("Database Error", "Unable to connect to the database.")
+        else:
+            messagebox.showerror("Login Error", "Please enter username, password, and select a role.")
+
+    login_button = ttk.Button(right_frame, text="Login", command=login, style="TButton")
+    login_button.pack(pady=10)
 
 style = ttk.Style()
 style.configure("TButton",
