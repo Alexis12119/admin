@@ -521,7 +521,7 @@ def show_teacher_dashboard(real_name):
     sort_var.set("Sort by")
 
     sort_dropdown = ttk.OptionMenu(main_content_frame, sort_var, "Time", "Time", "Name", "Date")
-    sort_dropdown.grid(row=2, column=1, padx=10, pady=(10, 5), sticky="e")  # Align to the right
+    sort_dropdown.grid(row=2, column=3, padx=10, pady=(10, 5), sticky="e")
 
     square1 = tk.Frame(main_content_frame, bg="white", width=100, height=100)
     square1.grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
@@ -535,6 +535,7 @@ def show_teacher_dashboard(real_name):
     main_content_frame.grid_columnconfigure(0, weight=1)
     main_content_frame.grid_columnconfigure(1, weight=1)
     main_content_frame.grid_columnconfigure(2, weight=1)
+    main_content_frame.grid_columnconfigure(3, weight=0)
 
     style = ttk.Style()
     style.configure("Sidebar.TButton", background=bg_color, foreground=text_color)
