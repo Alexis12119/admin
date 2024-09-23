@@ -554,12 +554,12 @@ def show_login_page():
     style = ttk.Style()
     style.configure('White.TButton', background="white", foreground='black')
 
-    username_label = tk.Label(right_frame, text="Username", bg=bg_color, fg=text_color)
+    username_label = tk.Label(right_frame, text="Username:", bg=bg_color, fg=text_color)
     username_label.pack()
     username_entry = ttk.Entry(right_frame, width=32)
     username_entry.pack(pady=5)
 
-    password_label = tk.Label(right_frame, text="Password", bg=bg_color, fg=text_color)
+    password_label = tk.Label(right_frame, text="Password:", bg=bg_color, fg=text_color)
     password_label.pack()
     password_frame = tk.Frame(right_frame, bg=bg_color)
     password_frame.pack(pady=5)
