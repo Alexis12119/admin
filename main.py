@@ -27,42 +27,35 @@ window.grid_rowconfigure(0, weight=1)
 def show_main_interface(real_name):
     global sidebar_frame, content_frame
     
-    # Destroy any existing widgets in the window
     for widget in window.winfo_children():
         widget.destroy()
     
-    # Sidebar setup with a wider layout but less vertical space between items
-    sidebar_frame = tk.Frame(window, width=300, bg=bg_color)  # Sidebar width
+    sidebar_frame = tk.Frame(window, width=300, bg=bg_color)
     separator_frame = tk.Frame(window, width=2, bg="white")
     content_frame = tk.Frame(window, bg=bg_color)
     
-    # Grid layout
     sidebar_frame.grid(row=0, column=0, sticky="ns")
     separator_frame.grid(row=0, column=1, sticky="ns")
     content_frame.grid(row=0, column=2, sticky="nsew")
 
-    # Icon placeholder at the top of the sidebar
     icon_placeholder = tk.Frame(sidebar_frame, width=60, height=60, bg="white")
-    icon_placeholder.pack(pady=(10, 10), padx=20)  # Adjusted top padding here
+    icon_placeholder.pack(pady=(10, 10), padx=20)
 
-    # Sidebar button style
     sidebar_button_style = "Sidebar.TButton"
     style.configure(sidebar_button_style,
                     background=bg_color,
                     foreground=text_color,
                     borderwidth=0,
-                    padding=10)  # Button padding
+                    padding=10) 
     style.map(sidebar_button_style,
               background=[("active", bg_color)],
               foreground=[("active", text_color)])
 
-    # Add a horizontal line (divider)
     line = tk.Frame(sidebar_frame, height=2, bg="white")
-    line.pack(fill=tk.X, padx=20)  # Increased the padding for the line
+    line.pack(fill=tk.X, padx=20)
 
-    # Sidebar buttons with reduced vertical padding between items
     home_button = ttk.Button(sidebar_frame, text="    Home", command=lambda: show_home_page(real_name), style=sidebar_button_style)
-    home_button.pack(pady=(5, 10), padx=40)  # Reduced top and bottom padding
+    home_button.pack(pady=(5, 10), padx=40)
 
     teacher_button = ttk.Button(sidebar_frame, text="󱪌  Teacher", command=lambda: show_teacher_form(real_name), style=sidebar_button_style)
     teacher_button.pack(pady=10, padx=40)
@@ -70,9 +63,8 @@ def show_main_interface(real_name):
     student_button = ttk.Button(sidebar_frame, text="  Student", command=lambda: show_student_form(real_name), style=sidebar_button_style)
     student_button.pack(pady=10, padx=40)
 
-    # Add another horizontal line (divider)
     line = tk.Frame(sidebar_frame, height=2, bg="white")
-    line.pack(fill=tk.X, padx=20, pady=(10, 5))  # Reduced padding around the line
+    line.pack(fill=tk.X, padx=20, pady=(10, 5))
 
     admin_button = ttk.Button(sidebar_frame, text="󰘰   Admin", command=lambda: show_admin_form(real_name), style=sidebar_button_style)
     admin_button.pack(pady=10, padx=40)
@@ -80,7 +72,6 @@ def show_main_interface(real_name):
     setting_button = ttk.Button(sidebar_frame, text="   Settings", command=lambda: show_settings_page(real_name), style=sidebar_button_style)
     setting_button.pack(pady=10, padx=40)
 
-    # Display the home page initially
     show_home_page(real_name)
 
 def show_home_page(real_name):
