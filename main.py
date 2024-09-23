@@ -558,7 +558,7 @@ def show_login_page():
 
     username_label = tk.Label(right_frame, text="Username", bg=bg_color, fg=text_color)
     username_label.pack()
-    username_entry = ttk.Entry(right_frame, width=30)
+    username_entry = ttk.Entry(right_frame, width=32)
     username_entry.pack(pady=5)
 
     password_label = tk.Label(right_frame, text="Password", bg=bg_color, fg=text_color)
